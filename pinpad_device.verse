@@ -68,15 +68,19 @@ pinpad_device := class(creative_device):
     CreateButton(Btn:button_quiet, Col:color, Txt:text_block, W:float, H:float):overlay=
         overlay:
             Slots:=array:
-                overlay_slot: # Color background
-                    Widget:=color_block{DefaultColor:=Col, DefaultDesiredSize:=vector2{X:=W, Y:=H}}
-                    HorizontalAlignment:=horizontal_alignment.Fill
-                    VerticalAlignment:=vertical_alignment.Fill
-                overlay_slot: # Button on top of background
+                overlay_slot: # Button as the base layer (clickable)
                     Widget:=Btn
                     HorizontalAlignment:=horizontal_alignment.Fill
                     VerticalAlignment:=vertical_alignment.Fill
-                overlay_slot: # Text on top
+                overlay_slot: # Color background with rounded corners
+                    Widget:=color_block{
+                        DefaultColor:=Col, 
+                        DefaultDesiredSize:=vector2{X:=W, Y:=H},
+                        DefaultCornerRadius:=vector4{X:=12.0, Y:=12.0, Z:=12.0, W:=12.0}
+                    }
+                    HorizontalAlignment:=horizontal_alignment.Fill
+                    VerticalAlignment:=vertical_alignment.Fill
+                overlay_slot: # Text on top (non-interactive)
                     Widget:=Txt
                     HorizontalAlignment:=horizontal_alignment.Center
                     VerticalAlignment:=vertical_alignment.Center
@@ -140,13 +144,34 @@ pinpad_device := class(creative_device):
                     SizeToContent:=true
                     Widget:=overlay:
                         Slots:=array:
-                            # Main panel background
+                            # Main panel background with rounded corners
                             overlay_slot:
-                                Widget:=color_block{DefaultColor:=PanelColor, DefaultDesiredSize:=vector2{X:=UIWidth, Y:=UIHeight}}
+                                Widget:=color_block{
+                                    DefaultColor:=PanelColor, 
+                                    DefaultDesiredSize:=vector2{X:=UIWidth, Y:=UIHeight},
+                                    DefaultCornerRadius:=vector4{X:=15.0, Y:=15.0, Z:=15.0, W:=15.0}
+                                }
                             
-                            # Close button positioned at top-right corner
+                            # Close button positioned at top-right corner with rounded corners
                             overlay_slot:
-                                Widget:=CreateButton(ButtonClose, ButtonCloseColor, TextClose, 45.0, 45.0)
+                                Widget:=overlay:
+                                    Slots:=array:
+                                        overlay_slot:
+                                            Widget:=ButtonClose
+                                            HorizontalAlignment:=horizontal_alignment.Fill
+                                            VerticalAlignment:=vertical_alignment.Fill
+                                        overlay_slot:
+                                            Widget:=color_block{
+                                                DefaultColor:=ButtonCloseColor, 
+                                                DefaultDesiredSize:=vector2{X:=45.0, Y:=45.0},
+                                                DefaultCornerRadius:=vector4{X:=22.5, Y:=22.5, Z:=22.5, W:=22.5}
+                                            }
+                                            HorizontalAlignment:=horizontal_alignment.Fill
+                                            VerticalAlignment:=vertical_alignment.Fill
+                                        overlay_slot:
+                                            Widget:=TextClose
+                                            HorizontalAlignment:=horizontal_alignment.Center
+                                            VerticalAlignment:=vertical_alignment.Center
                                 HorizontalAlignment:=horizontal_alignment.Right
                                 VerticalAlignment:=vertical_alignment.Top
                                 Padding:=margin{Right:=(UIWidth - 20.0 - 45.0), Top:=(UIHeight - 20.0 - 45.0)}
@@ -166,13 +191,17 @@ pinpad_device := class(creative_device):
                                                 DefaultJustification:=text_justification.Center
                                             }
                                         
-                                        # Display box
+                                        # Display box with rounded corners
                                         stack_box_slot:
                                             Padding:=margin{Bottom:=30.0}
                                             Widget:=overlay:
                                                 Slots:=array:
                                                     overlay_slot:
-                                                        Widget:=color_block{DefaultColor:=DisplayBackgroundColor, DefaultDesiredSize:=vector2{X:=360.0, Y:=60.0}}
+                                                        Widget:=color_block{
+                                                            DefaultColor:=DisplayBackgroundColor, 
+                                                            DefaultDesiredSize:=vector2{X:=360.0, Y:=60.0},
+                                                            DefaultCornerRadius:=vector4{X:=8.0, Y:=8.0, Z:=8.0, W:=8.0}
+                                                        }
                                                     overlay_slot:
                                                         Widget:=NumTB
                                                         HorizontalAlignment:=horizontal_alignment.Center
