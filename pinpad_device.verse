@@ -72,11 +72,10 @@ pinpad_device := class(creative_device):
                     Widget:=Btn
                     HorizontalAlignment:=horizontal_alignment.Fill
                     VerticalAlignment:=vertical_alignment.Fill
-                overlay_slot: # Color background with rounded corners
+                overlay_slot: # Color background
                     Widget:=color_block{
                         DefaultColor:=Col, 
-                        DefaultDesiredSize:=vector2{X:=W, Y:=H},
-                        DefaultCornerRadius:=vector4{X:=12.0, Y:=12.0, Z:=12.0, W:=12.0}
+                        DefaultDesiredSize:=vector2{X:=W, Y:=H}
                     }
                     HorizontalAlignment:=horizontal_alignment.Fill
                     VerticalAlignment:=vertical_alignment.Fill
@@ -144,15 +143,14 @@ pinpad_device := class(creative_device):
                     SizeToContent:=true
                     Widget:=overlay:
                         Slots:=array:
-                            # Main panel background with rounded corners
+                            # Main panel background
                             overlay_slot:
                                 Widget:=color_block{
                                     DefaultColor:=PanelColor, 
-                                    DefaultDesiredSize:=vector2{X:=UIWidth, Y:=UIHeight},
-                                    DefaultCornerRadius:=vector4{X:=15.0, Y:=15.0, Z:=15.0, W:=15.0}
+                                    DefaultDesiredSize:=vector2{X:=UIWidth, Y:=UIHeight}
                                 }
                             
-                            # Close button positioned at top-right corner with rounded corners
+                            # Close button positioned at top-right corner
                             overlay_slot:
                                 Widget:=overlay:
                                     Slots:=array:
@@ -163,8 +161,7 @@ pinpad_device := class(creative_device):
                                         overlay_slot:
                                             Widget:=color_block{
                                                 DefaultColor:=ButtonCloseColor, 
-                                                DefaultDesiredSize:=vector2{X:=45.0, Y:=45.0},
-                                                DefaultCornerRadius:=vector4{X:=22.5, Y:=22.5, Z:=22.5, W:=22.5}
+                                                DefaultDesiredSize:=vector2{X:=45.0, Y:=45.0}
                                             }
                                             HorizontalAlignment:=horizontal_alignment.Fill
                                             VerticalAlignment:=vertical_alignment.Fill
@@ -191,7 +188,7 @@ pinpad_device := class(creative_device):
                                                 DefaultJustification:=text_justification.Center
                                             }
                                         
-                                        # Display box with rounded corners
+                                        # Display box
                                         stack_box_slot:
                                             Padding:=margin{Bottom:=30.0}
                                             Widget:=overlay:
@@ -199,8 +196,7 @@ pinpad_device := class(creative_device):
                                                     overlay_slot:
                                                         Widget:=color_block{
                                                             DefaultColor:=DisplayBackgroundColor, 
-                                                            DefaultDesiredSize:=vector2{X:=360.0, Y:=60.0},
-                                                            DefaultCornerRadius:=vector4{X:=8.0, Y:=8.0, Z:=8.0, W:=8.0}
+                                                            DefaultDesiredSize:=vector2{X:=360.0, Y:=60.0}
                                                         }
                                                     overlay_slot:
                                                         Widget:=NumTB
