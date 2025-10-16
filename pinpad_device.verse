@@ -68,12 +68,12 @@ pinpad_device := class(creative_device):
     CreateButton(Btn:button_quiet, Col:color, Txt:text_block, W:float, H:float):overlay=
         overlay:
             Slots:=array:
-                overlay_slot: # Button as the base layer
-                    Widget:=Btn
-                    HorizontalAlignment:=horizontal_alignment.Fill
-                    VerticalAlignment:=vertical_alignment.Fill
                 overlay_slot: # Color background
                     Widget:=color_block{DefaultColor:=Col, DefaultDesiredSize:=vector2{X:=W, Y:=H}}
+                    HorizontalAlignment:=horizontal_alignment.Fill
+                    VerticalAlignment:=vertical_alignment.Fill
+                overlay_slot: # Button on top of background
+                    Widget:=Btn
                     HorizontalAlignment:=horizontal_alignment.Fill
                     VerticalAlignment:=vertical_alignment.Fill
                 overlay_slot: # Text on top
@@ -144,30 +144,27 @@ pinpad_device := class(creative_device):
                             overlay_slot:
                                 Widget:=color_block{DefaultColor:=PanelColor, DefaultDesiredSize:=vector2{X:=UIWidth, Y:=UIHeight}}
                             
+                            # Close button positioned at top-right corner
+                            overlay_slot:
+                                Widget:=CreateButton(ButtonClose, ButtonCloseColor, TextClose, 45.0, 45.0)
+                                HorizontalAlignment:=horizontal_alignment.Right
+                                VerticalAlignment:=vertical_alignment.Top
+                                Padding:=margin{Right:=(UIWidth - 20.0 - 45.0), Top:=(UIHeight - 20.0 - 45.0)}
+                            
                             # Content
                             overlay_slot:
                                 Padding:=margin{Top:=20.0, Left:=20.0, Right:=20.0, Bottom:=20.0}
                                 Widget:=stack_box:
                                     Orientation:=orientation.Vertical
                                     Slots:=array:
-                                        # Header with title and close button
+                                        # Header with title
                                         stack_box_slot:
                                             Padding:=margin{Bottom:=25.0}
-                                            Widget:=overlay: # New overlay for header to manage close button position
-                                                Slots:=array:
-                                                    overlay_slot:
-                                                        Widget:=text_block{
-                                                            DefaultText:=S2M("PIN CODE"),
-                                                            DefaultTextColor:=TitleColor,
-                                                            DefaultJustification:=text_justification.Center
-                                                        }
-                                                        HorizontalAlignment:=horizontal_alignment.Center
-                                                        VerticalAlignment:=vertical_alignment.Center
-                                                    overlay_slot:
-                                                        Widget:=CreateButton(ButtonClose, ButtonCloseColor, TextClose, 45.0, 45.0)
-                                                        HorizontalAlignment:=horizontal_alignment.Right # Positions button within the header overlay
-                                                        VerticalAlignment:=vertical_alignment.Top     # Positions button within the header overlay
-                                                        Padding:=margin{Right:=(UIWidth - 20.0 - 45.0), Top:=20.0} # Position at UIWidth - 20 and UIHeight - 20
+                                            Widget:=text_block{
+                                                DefaultText:=S2M("PIN CODE"),
+                                                DefaultTextColor:=TitleColor,
+                                                DefaultJustification:=text_justification.Center
+                                            }
                                         
                                         # Display box
                                         stack_box_slot:
